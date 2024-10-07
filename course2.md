@@ -227,7 +227,9 @@ Logins table:
 | 2 | Andrew| 
 | 3 | Yolanda | 
 | 4 | Bob |
+
 Run this Query on the tables:
+
 ```SQL
 // not returning anything exclusive to Table B
 SELECT * FROM Registrations

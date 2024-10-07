@@ -186,3 +186,19 @@ Result:
 | 4 | David | null | null | 
 | null | null | 1 | Xavier | 
 | null | null | 3 | Yolanda |
+
+#### Full Outer Join with WHERE: 
+This gets the rows with no match:
+```SQL
+SELECT * FROM Registrations
+FULL OUTER JOIN Logins
+ON Registratoins.name=Logins.name
+WHERE Registrations.reg_id IS null OR Logins.log_id IS null
+```
+So the outcome is: 
+| log_id | name | log_id | name | 
+| ----- | -------- | ------- | ------- |
+| 3 | Charlie | null | null | 
+| 4 | David | null | null | 
+| null | null | 1 | Xavier | 
+| null | null | 3 | Yolanda |

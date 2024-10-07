@@ -255,6 +255,7 @@ WHERE TableB.id IS null
 ```
 - Grabs where login id and login name is NULL
 Result:
+
 | log_id | name | log_id | name | 
 | ----- | -------- | ------- | ------- |
 | 3 | Charlie | null | null | 

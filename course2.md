@@ -76,6 +76,113 @@ LIMIT 5;
 ## HAVING
 - The HAVING clause allows us to filter **after** an aggregation has already taken place
 ```SQL
-
-
+SELECT company, SUM(sales)
+FROM finance_table
+WHERE company!='Google'
+GROUP BY company
+HAVING SUM(sales)>1000
 ```
+- HAVING allows us to use the aggregate result as a filter along with a GROUP BY
+``` SQL
+// returns count of customers in each store
+SELECT customer_id, COUNT(customer_id) FROM customer
+GROUP BY store_id;
+// this gives the same results
+SELECT customer_id, COUNT(*) FROM customer
+GROUP BY store_id;
+
+SELECT store_id, COUNT(customer_id) FROM customer
+GROUP BY store_id
+HAVING COUNT(customer_id) > 300;
+```
+- What are the customer ids of customers who have spent more than $100 in payment transactions with our staff_id member 2?
+``` SQL
+SELECT customer_id, SUM(amount)
+FROM payment
+WHERE staff_id=2
+GROUP BY customer_id
+HAVING SUM(amount)>100;
+```
+
+## JOINS
+- Joins allow us to combine multiple tables together
+
+### AS Statement
+```SQL
+SELECT amount AS rental_price // instead of column returning amount it returns rental_price (readability) 
+FROM payment;
+
+SELECT customer_id, SUM(amount) AS net_revenue
+FROM payment
+GROUP BY customer_id;
+```
+- **the AS operator gets executed at the very end of a query, meaning that we can not use the ALIAS inside a WHERE operator**
+- only get to use it in SELECT statement
+You can NOT do this because AS operator is executed at the END:
+```SQL
+SELECT customer_id, SUM(amount) AS total_spent
+FROM payment
+GROUP BY customer_id
+HAVING SUM(total_spent) > 100
+```
+You have to choose the original:
+```SQL
+SELECT customer_id, SUM(amount) AS total_spent
+FROM payment
+GROUP BY customer_id
+HAVING SUM(amount) > 100
+```
+You can NOT do this either:
+```SQL
+SELECT customer_id, amount AS new_name
+FROM payment
+WHERE new_name > 2;
+```
+
+### Inner Join
+- will result with the set of records that **match in both** tables (the overlap in a venn diagram)
+```SQL
+SELECT * FROM Registrations // select all columns
+INNER JOIN Logins // Logins is a table
+ON Registrations.name = Logins.name; // column you're looking at to perform the inner join
+
+// Selecting specific columns 
+SELECT reg_id, Logins.name, log_id // could say Registrations.name instead if you want
+FROM Registrations
+INNER JOIN Logins
+ON Registrations.name = Logins.name;
+```
+- remember that table order won't matter in an INNER JOIN
+- if you see just JOIN without the INNER, it will be treated as an INNER JOIN
+
+### Full Outer Join
+Registrations table:
+| reg_id | name | 
+| ----- | -------- |
+| 1 | Andrew | 
+| 2 | Bob | 
+| 3 | Charlie | 
+| 4 | David |
+Logins table:
+| log_id | name | 
+| ----- | -------- |
+| 1 | Xavier | 
+| 2 | Andrew| 
+| 3 | Yolanda | 
+| 4 | Bob |
+Run this Query on those tables: 
+```SQL
+SELECT * FROM Registrations
+FULL OUTER JOIN Logins
+ON Registratoins.name=Logins.name
+```
+Result:
+
+| log_id | name | log_id | name | 
+| ----- | -------- | ------- | ------- |
+| 1 | Andrew | 2 | Andrew | 
+| 2 | Bob | 4 | Bob |
+| 3 | Charlie | null | null | 
+| 4 | David | null | null | 
+| null | null | 1 | Xavier | 
+| null | null | 3 | Yolanda |

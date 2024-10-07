@@ -202,3 +202,60 @@ So the outcome is:
 | 4 | David | null | null | 
 | null | null | 1 | Xavier | 
 | null | null | 3 | Yolanda |
+
+### Left Outer Join
+- results in the set of records that are in the left table, if there is no match with the right table, the results are null
+- can be notated LEFT OUTER JOIN or LEFT JOIN
+- order MATTERS for left outer join
+```SQL
+// not returning anything exclusive to Table B
+SELECT * FROM TableA
+LEFT OUTER JOIN TableB
+ON TableA.col_match=TableB.col_match
+```
+Registrations table:
+| reg_id | name | 
+| ----- | -------- |
+| 1 | Andrew | 
+| 2 | Bob | 
+| 3 | Charlie | 
+| 4 | David |
+Logins table:
+| log_id | name | 
+| ----- | -------- |
+| 1 | Xavier | 
+| 2 | Andrew| 
+| 3 | Yolanda | 
+| 4 | Bob |
+Run this Query on the tables:
+```SQL
+// not returning anything exclusive to Table B
+SELECT * FROM Registrations
+LEFT OUTER JOIN Logins
+ON Registrations.name=Logins.name
+```
+Result:
+
+| log_id | name | log_id | name | 
+| ----- | -------- | ------- | ------- |
+| 1 | Andrew | 2 | Andrew | 
+| 2 | Bob | 4 | Bob |
+| 3 | Charlie | null | null | 
+| 4 | David | null | null | 
+- notice that Yolanda and Bob from Logins is not included (what's exclusive to that right table)
+- table order DOES MATTER when it comes to a left outer join (aka left join)
+#### Left Outer Join with Where
+- What if we only wanted entires unique to Table A? Those rows found in Table A and not found in Table B?
+```SQL
+// not returning anything exclusive to Table B
+SELECT * FROM Registrations
+LEFT OUTER JOIN Logins
+ON Registrations.name=Logins.name
+WHERE TableB.id IS null
+```
+- Grabs where login id and login name is NULL
+Result:
+| log_id | name | log_id | name | 
+| ----- | -------- | ------- | ------- |
+| 3 | Charlie | null | null | 
+| 4 | David | null | null | 

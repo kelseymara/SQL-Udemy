@@ -267,3 +267,12 @@ Result:
 
 ### Right Outer Join
 - essentially the same as a LEFT JOIN, except the tables are switched
+  
+### Union
+- used to combine the result-set of two or mor SELECT statements
+- basically serves to directly concatenate two results together, essentially "pasting" them together
+```SQL
+SELECT column_name(s) FROM table 1
+UNION
+SELECT column_name(s) from table2;
+```

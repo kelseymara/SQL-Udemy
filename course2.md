@@ -220,7 +220,9 @@ Registrations table:
 | 2 | Bob | 
 | 3 | Charlie | 
 | 4 | David |
+
 Logins table:
+
 | log_id | name | 
 | ----- | -------- |
 | 1 | Xavier | 

@@ -49,4 +49,33 @@ SELECT DATE(payment_date) FROM payment; // formats the date into a more readable
 SELECT DATE(payment_date) FROM payment
 GROUP BY DATE(payment_date); // want to group the dates to see which ones have same date
 ```
+## GROUP BY - Challenge
+- We have 2 staff members, with staff IDs 1 and 2. We want to give a bonus to the staff member that handled the most payments (most in terms of number of payments processed, not total dollar amount).
+- How many payments did each staff member handle and who gets the bonus?
+```SQL
+SELECT staff_id, COUNT(amount)
+FROM payment,
+GROUP BY staff_id;
+```
+- Corporate HQ is conducting a study on the relationship between replacement cost and a movie MPAA rating (e.g. PG, R, etc...)
+- What is the average replacement cost per MPAA rating? note: you many need to expand the AVG column to view correct results
+```SQL
+SELECT rating, ROUND(AVG(replacement_cost),2)
+FROM film
+GROUP BY rating;
+```
+- We are running a promotion to reward our top 5 customers with coupons
+- What are the customer ids of the top 5 customers by total spend?
+```SQL
+SELECT customer_id, SUM(amount)
+FROM payment
+ORDER BY SUM(amount) DESC
+LIMIT 5;
+```
 
+## HAVING
+- The HAVING clause allows us to filter **after** an aggregation has already taken place
+```SQL
+
+
+```

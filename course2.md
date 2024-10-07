@@ -264,3 +264,6 @@ Result:
 | ----- | -------- | ------- | ------- |
 | 3 | Charlie | null | null | 
 | 4 | David | null | null | 
+
+### Right Outer Join
+- essentially the same as a LEFT JOIN, except the tables are switched
